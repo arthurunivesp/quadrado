@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuva de Bytes Binários</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000000; /* Cor de fundo preto */
+        }
+        .container {
+            width: 1366px;
+            height: 768px;
+            background-color: #000000; /* Cor de fundo preto */
+            position: relative;
+            overflow: hidden;
+        }
+        .byte {
+            position: absolute;
+            font-family: monospace;
+            font-size: 20px;
+            color: #00ff00; /* Cor verde */
+            line-height: 1; /* Ajuste o espaçamento entre as linhas */
+        }
+        .centro {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #ffffff; /* Cor branca */
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="centro">
+        <h1>Plataforma Ensino de Programação</h1>
+        <img src="https://media1.tenor.com/images/cd37fa49c983ac905df0016fd5b6a2ee/tenor.gif?itemid=13165216" alt="Imagem Centralizada">
+    </div>
+    <div class="container"></div>
+    <script>
+        const container = document.querySelector('.container');
+        const containerWidth = container.offsetWidth;
+        const containerHeight = container.offsetHeight;
+        const byteSpacing = 100; // Ajuste o valor para o espaçamento desejado
+
+        function gerarByteBinario() {
+            let byte = '';
+            for (let i = 0; i < 8; i++) { // Gera uma sequência de 8 dígitos
+                byte += Math.random() < 0.5 ? '0\n' : '1\n'; // Quebra de linha após cada dígito
+            }
+            return byte;
+        }
+
+        function criarByte() {
+            const byte = document.createElement('div');
+            byte.classList.add('byte');
+            byte.innerText = gerarByteBinario();
+            byte.style.left = Math.random() * (containerWidth - byteSpacing) + 'px';
+            byte.style.top = '0px';
+            container.appendChild(byte);
+
+            function cair() {
+                let posicaoAtual = parseFloat(byte.style.top);
+                if (posicaoAtual < containerHeight) {
+                    byte.style.top = posicaoAtual + 1 + 'px';
+                } else {
+                    byte.remove();
+                }
+                requestAnimationFrame(cair);
+            }
+
+            requestAnimationFrame(cair);
+        }
+
+        setInterval(criarByte, 300); // Ajuste o intervalo para a frequência de novos bytes
+    </script>
+</body>
+</html>
